@@ -1,0 +1,8 @@
+name = "Automata"
+uuid = "103bccea-f3f6-4293-a521-7b0cd6e52d5e"
+authors = ["Connor Burns <cburns@cot.llc>"]
+version = "0.1.0"
+
+[deps]
+Images = "916415d5-f1e6-5110-898d-aaa5f9f070e0"
+Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
