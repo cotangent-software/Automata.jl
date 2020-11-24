@@ -7,30 +7,19 @@ end
 
 function tests()
   @testset "Elementary Tests" begin
-    state = elementary(30, 10)[end]
-    @test allequal(state[1], Bool[1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 0, 1, 0, 0, 0, 1, 1, 1])
-    @test state[2] == false
-
-    state = elementary(90, 10)[end]
-    @test allequal(state[1], Bool[1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1])
-    @test state[2] == false
-
-    state = elementary(110, 10)[end]
-    @test allequal(state[1], Bool[1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0])
-    @test state[2] == false
+    @test allequal(automaton(ElementaryRule(30), 10)[end, :], Bool[1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 0, 1, 0, 0, 0, 1, 1, 1])
+    @test allequal(automaton(ElementaryRule(90), 10)[end, :], Bool[1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1])
+    @test allequal(automaton(ElementaryRule(110), 10)[end, :], Bool[1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0])
+  end
+  @testset "Elementary Reversible Tests" begin
+    @test allequal(automaton(ElementaryReversibleRule(30), 10)[end, :], Bool[0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0, 1, 0])
+    @test allequal(automaton(ElementaryReversibleRule(111), 10)[end, :], Bool[0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0, 1, 1, 0])
+    @test allequal(automaton(ElementaryReversibleRule(137), 10)[end, :], Bool[0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0])
   end
   @testset "Totalistic Tests" begin
-    state = totalistic(177, 10)[end]
-    @test allequal(state[1], UInt8[0x02, 0x00, 0x00, 0x01, 0x01, 0x01, 0x00, 0x00, 0x00, 0x02, 0x00, 0x00, 0x00, 0x01, 0x01, 0x01, 0x00, 0x00, 0x02])
-    @test state[2] == 0x00
-
-    state = totalistic(777, 10)[end]
-    @test allequal(state[1], UInt8[0x01, 0x01, 0x00, 0x00, 0x01, 0x02, 0x02, 0x02, 0x02, 0x01, 0x02, 0x02, 0x02, 0x02, 0x01, 0x00, 0x00, 0x01, 0x01])
-    @test state[2] == 0x00
-
-    state = totalistic(2530, 10, 4)[end]
-    @test allequal(state[1], UInt8[0x00, 0x03, 0x02, 0x00, 0x02, 0x00, 0x00, 0x00, 0x01, 0x01, 0x01, 0x00, 0x00, 0x00, 0x02, 0x00, 0x02, 0x03, 0x00])
-    @test state[2] == 0x02
+    @test allequal(automaton(TotalisticRule(177, 3), 10)[end, :], UInt8[0x02, 0x00, 0x00, 0x01, 0x01, 0x01, 0x00, 0x00, 0x00, 0x02, 0x00, 0x00, 0x00, 0x01, 0x01, 0x01, 0x00, 0x00, 0x02])
+    @test allequal(automaton(TotalisticRule(777, 3), 10)[end, :], UInt8[0x01, 0x01, 0x00, 0x00, 0x01, 0x02, 0x02, 0x02, 0x02, 0x01, 0x02, 0x02, 0x02, 0x02, 0x01, 0x00, 0x00, 0x01, 0x01])
+    @test allequal(automaton(TotalisticRule(2530, 4), 10)[end, :], UInt8[0x00, 0x03, 0x02, 0x00, 0x02, 0x00, 0x00, 0x00, 0x01, 0x01, 0x01, 0x00, 0x00, 0x00, 0x02, 0x00, 0x02, 0x03, 0x00])
   end
 end
 
